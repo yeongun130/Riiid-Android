@@ -38,7 +38,6 @@ dependencies {
 
     implementation(project(":domain"))
 
-    // okhttp
     implementation(Dependency.Libraries.OKHTTP)
 
     implementation(Dependency.Androidx.CORE_KTX)
