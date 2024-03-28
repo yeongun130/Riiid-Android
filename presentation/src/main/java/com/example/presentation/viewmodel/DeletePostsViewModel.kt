@@ -16,10 +16,10 @@ import javax.inject.Inject
 class DeletePostsViewModel @Inject constructor(
     private val deletePostsUseCase: DeletePostsUseCase
 ): ViewModel() {
-    private val _deletePost = MutableStateFlow<Event<Unit>>(Event.Loading)
-    val deletePost = _deletePost.asStateFlow()
+    private val _deletePostState = MutableStateFlow<Event<Unit>>(Event.Loading)
+    val deletePostState = _deletePostState.asStateFlow()
 
-    fun DeletePost(id: Int) = viewModelScope.launch {
+    fun deletePost(id: Int) = viewModelScope.launch {
         deletePostsUseCase(id = id).onSuccess {
             val response = it.toString()
 
@@ -27,11 +27,11 @@ class DeletePostsViewModel @Inject constructor(
                 val jsonObject = JSONObject(response)
                 val code = jsonObject.getInt("code")
 
-                if (code == 200) _deletePost.value = Event.Accepted
-            } else _deletePost.value = Event.Success(it)
+                if (code == 200) _deletePostState.value = Event.Accepted
+            } else _deletePostState.value = Event.Success(it)
         }.onFailure {
             it.exceptionHandling(
-                conflictAction = { _deletePost.value = Event.Conflict }
+                conflictAction = { _deletePostState.value = Event.Conflict }
             )
         }
     }

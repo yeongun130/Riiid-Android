@@ -16,15 +16,15 @@ import javax.inject.Inject
 class GetPostsViewModel @Inject constructor(
     private val getPostsUseCase: GetPostsUseCase
 ): ViewModel() {
-    private val _getPosts = MutableStateFlow<Event<List<PostsResponseModel>>>(Event.Loading)
-    val getPosts = _getPosts.asStateFlow()
+    private val _getPostsState = MutableStateFlow<Event<List<PostsResponseModel>>>(Event.Loading)
+    val getPostsState = _getPostsState.asStateFlow()
 
-    fun GetPosts() = viewModelScope.launch {
+    fun getPosts() = viewModelScope.launch {
         getPostsUseCase().onSuccess {
-            _getPosts.value = Event.Success(it)
+            _getPostsState.value = Event.Success(it)
         }.onFailure {
             it.exceptionHandling(
-                badRequestAction = { _getPosts.value = Event.BadRequest }
+                badRequestAction = { _getPostsState.value = Event.BadRequest }
             )
         }
     }

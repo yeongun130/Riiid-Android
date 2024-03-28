@@ -16,10 +16,10 @@ import javax.inject.Inject
 class ChangePostsViewModel @Inject constructor(
     private val changePostsUseCase: ChangePostsUseCase
 ): ViewModel() {
-    private val _changePost = MutableStateFlow<Event<Unit>>(Event.Loading)
-    val changePost = _changePost.asStateFlow()
+    private val _changePostState = MutableStateFlow<Event<Unit>>(Event.Loading)
+    val changePostState = _changePostState.asStateFlow()
 
-    fun ChangePost(
+    fun changePost(
         id: Int,
         postsRequestModel: PostsRequestModel
     ) = viewModelScope.launch {
@@ -27,10 +27,10 @@ class ChangePostsViewModel @Inject constructor(
             id = id,
             postsRequestModel = postsRequestModel
         ).onSuccess {
-            _changePost.value = Event.Success(it)
+            _changePostState.value = Event.Success(it)
         }.onFailure {
             it.exceptionHandling(
-                conflictAction = { _changePost.value = Event.Conflict }
+                conflictAction = { _changePostState.value = Event.Conflict }
             )
         }
     }
