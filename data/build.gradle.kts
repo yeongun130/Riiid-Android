@@ -61,6 +61,8 @@ dependencies {
 
     implementation(Dependency.Paging.PAGING)
 
+    implementation(Dependency.Room.ROOM)
+
     testImplementation(Dependency.UnitTest.JUNIT)
     androidTestImplementation(Dependency.AndroidTest.ANDROID_JUNIT)
     androidTestImplementation(Dependency.AndroidTest.ESPRESSO_CORE)

@@ -28,4 +28,6 @@ object Versions {
     const val LANDSCAPIST_COMPOSE = "2.1.2"
 
     const val PAGING = "3.2.1"
+
+    const val ROOM = "2.6.1"
 }
